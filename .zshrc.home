@@ -1,0 +1,100 @@
+# Path to your oh-my-zsh installation.
+export ZSH=/Users/roryj/.oh-my-zsh
+
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="agnoster"
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(vi-mode, aws, zsh-autosuggestions)
+
+# For zsh autosuggest
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=blue'
+bindkey '^F' autosuggest-accept
+
+# User configuration
+
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+# export MANPATH="/usr/local/man:$MANPATH"
+
+source $ZSH/oh-my-zsh.sh
+
+alias ls='ls -G'
+
+alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
+
+bindkey -v
+bindkey '^R' history-incremental-search-backward
+
+# Adding go to path
+export PATH="/usr/local/go/bin:$PATH"
+
+# Add own bin for crux
+export PATH="/Users/roryj/bin:$PATH"
+
+# Turn on powerline prompt in shell
+#export PATH="$HOME/Library/Python/2.7/bin:$PATH"
+#source /Users/roryj/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
+export PATH=$PATH:/usr/local/bin  # MIDWAY PATH: Path changed for ssh
+export PATH=$PATH:/usr/local/Cellar/node/8.1.0_1/bin
+
+# configure fuzzy autocomplete on tab
+zstyle ':completion:*' matcher-list '' \
+ 'm:{a-z\-}={A-Z\_}' \
+ 'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
+ 'r:[[:ascii:]]||[[:ascii:]]=** r:|=* m:{a-z\-}={A-Z\_}'
+
+# python path setup needed for botocore_amazon setup
+export PATH="/Users/roryj/Library/Python/3.7/bin":$PATH
+
+# Add go path to path
+#export PATH=$GOPATH/bin:$PATH
+
+# Auto complete for awsless
+#source /usr/local/share/zsh/site-functions/_awless
+
+# For raspberry pi @ home
+alias ssh-rpi='ssh roryj@192.168.1.112'
