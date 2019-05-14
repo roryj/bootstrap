@@ -69,6 +69,13 @@ Plugin 'vimwiki/vimwiki'
 " Also open txt files with markdown support
 let g:vim_markdown_auto_extension_ext = 'txt'
 
+" hybrid numbering https://github.com/jeffkreeftmeijer/vim-numbertoggle
+Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+set number relativenumber
+
+" multiple cursor mode just like sublime!! https://github.com/terryma/vim-multiple-cursors#installation
+Plugin 'terryma/vim-multiple-cursors'
+
 " Python highlighting
 Plugin 'scrooloose/syntastic'
 Plugin 'nvie/vim-flake8'
