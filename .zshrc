@@ -53,8 +53,5 @@ zstyle ':completion:*' matcher-list '' \
 # Add go path to path
 #export PATH=$GOPATH/bin:$PATH
 
-# Auto complete for awsless
-#source /usr/local/share/zsh/site-functions/_awless
-
 # For raspberry pi @ home
 alias ssh-rpi='ssh roryj@192.168.1.112'
