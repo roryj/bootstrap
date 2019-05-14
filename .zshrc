@@ -14,7 +14,11 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode, aws, zsh-autosuggestions)
+plugins=(vi-mode, aws, zsh-autosuggestions, tmux)
+
+# For zsh tmux addition https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins#tmux
+ZSH_TMUX_AUTOSTART="true"
+ZSH_TMUX_AUTOCONNECT="false"
 
 # For zsh autosuggest
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=blue'
