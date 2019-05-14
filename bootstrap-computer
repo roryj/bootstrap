@@ -13,22 +13,25 @@ _______  ___________ ___.__.   |__| \_ |__   ____   _____/  |_  _______/  |_____
 
 sleep 1.5
 
-# parsing the cmd
-install_directory=$HOME
-
 usage()
 {
-    echo "usage: bootstrap-laptop --home ~/test/
+    echo "usage: bootstrap-laptop --home ~/test/ -i
 
-    --home   The home directory to install the dot files (defaults to ~/) 
+    --home                  The home directory to install the dot files (defaults to ~/) 
+    -i | --install-packages A flag install packages
     "
 }
 
-
+# parsing the cmd
+install_directory=$HOME
+should_install_packages=false
 while [[ "$1" != "" ]]; do
     case $1 in
         --home )      shift
             install_directory=$1
+            ;;
+        -i | --install-packages ) shift
+            should_install_packages=true
             ;;
         * )                     
             usage
@@ -36,7 +39,6 @@ while [[ "$1" != "" ]]; do
     esac
     shift
 done
-
 
 install_directory=`pwd $install_directory`
 
@@ -65,20 +67,25 @@ packages_to_install=('ripgrep' 'go' 'tldr' 'awscli' 'tmux' 'vim' 'python3' 'pand
 if [[ "$OSTYPE" == "darwin"* ]]; then
     echo "Mac OS detected"
 
-    # install xcode basics
-    #xcode-select --install
+    if [[ "$should_install_packages" = true ]]; then
+        # install xcode basics
+        xcode-select --install
 
-    # install brew for dope package managing
-    #/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        # install brew for dope package managing
+        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-    # make sure it is all setup and working
-    #brew doctor
+        # make sure it is all setup and working
+        brew doctor
 
-    # now get a bunch of packages that are useful
-    for package in "${packages_to_install[@]}" 
-    do
-        echo "Installing ${package}"
-        #brew install "${package}"
-    done
+        for package in "${packages_to_install[@]}" 
+        do
+            echo "Installing ${package}"
+            brew install "${package}"
+        done
+    else
+        echo "Skipping package installing"
+    fi
+
+
 fi
 
