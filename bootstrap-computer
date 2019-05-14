@@ -19,6 +19,23 @@ usage()
     -i | --install-packages A flag indicating you want to install some dope-fly packages
     "
 }
+prompt() {
+
+    if [[ $1 == 1 ]]; then
+        echo "Continue?"
+    else
+        echo "(Dry-run) Continue?"
+    fi
+
+    read continue
+
+    if [[ ${continue} == "y" ]]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
 
 # parsing the cmd
 install_directory=$HOME
@@ -39,6 +56,8 @@ while [[ "$1" != "" ]]; do
 done
 
 install_directory=`pwd $install_directory`
+
+prompt should_install_packages
 
 # Configuration
 echo "Using home directory: $install_directory"
