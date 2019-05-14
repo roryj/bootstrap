@@ -73,8 +73,8 @@ echo "$all_dotfiles"
 
 for dotfile in ${all_dotfiles};
 do
-    echo "installing $dotfile to $HOME_DIRECTORY"
-    cp "./$dotfile" $HOME_DIRECTORY
+    echo "installing $dotfile to $install_directory"
+    cp "./$dotfile" $install_directory
 done
 
 echo "Installing standalone programs"
