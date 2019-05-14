@@ -55,7 +55,7 @@ while [[ "$1" != "" ]]; do
     shift
 done
 
-install_directory=`pwd $install_directory`
+install_directory=`realpath $install_directory`
 
 prompt should_install_packages
 
