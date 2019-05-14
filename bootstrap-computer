@@ -16,7 +16,7 @@ usage()
     echo "usage: bootstrap-laptop --home ~/test/ -i
 
     --home                  The home directory to install the dot files (defaults to ~/) 
-    -i | --install-packages A flag install packages
+    -i | --install-packages A flag indicating you want to install some dope-fly packages
     "
 }
 
