@@ -9,8 +9,13 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
-     sql
+     clojure
+     org
      osx
+     pandoc
+     spell-checking
+     sql
+     syntax-checking
      )))
 
 (defun dotspacemacs/init ()
@@ -38,6 +43,10 @@ user code."
 layers configuration. You are free to put any user code."
   ;; Clojure
   (setq clojure-enable-fancify-symbols t)
+
+  ;; set pretty symbols for anonymous functions
+  (setq-default dotspacemacs-configuration-layers
+    '((spell-checking :variables spell-checking-enable-auto-dictionary t)))
 
   ;; TODO items with unfinished child TODOs cannot be marked as done
   (setq org-enforce-todo-dependencies t)
