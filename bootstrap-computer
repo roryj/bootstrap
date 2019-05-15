@@ -66,16 +66,7 @@ echo "Getting started..."
 
 echo "Installing dotfiles"
 
-all_dotfiles=`ls | find . -name '.*' -not -name '.git*' -not -name '.' | cut -d '/' -f2`
-
-echo "all dotfiles:"
-echo "$all_dotfiles"
-
-for dotfile in ${all_dotfiles};
-do
-    echo "installing $dotfile to $install_directory"
-    cp "./$dotfile" $install_directory
-done
+rsync -av --exclude '*.git*' --exclude '*Config' --exclude '*README.md'  ./ $install_directory
 
 echo "Installing standalone programs"
 
