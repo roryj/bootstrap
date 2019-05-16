@@ -138,7 +138,7 @@ if [[ (${install_everything} == true) || (${install_dotfiles} == true) ]]; then
 
     echo "Installing dotfiles"
 
-    rsync -av --exclude '*.git*' --exclude '*Config' --exclude '*README.md'  ./ $install_directory
+    rsync -av --exclude '*.git*' --exclude '*Config' --exclude '*README.md' --exclude '*bootstrap-computer'  ./ $install_directory
 
     echo "dotfiles installed to ${install_directory}"
 
