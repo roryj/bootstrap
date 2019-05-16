@@ -93,7 +93,13 @@ let g:syntastic_check_on_wq = 0
 Plugin 'christoomey/vim-tmux-navigator'
 
 " install go-vim plugin
-Plugin 'fatih/vim-go'
+Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+" auto format and add imports when saving file
+let g:go_fmt_command = "goimports"
+" only use quickfix for errors
+let g:go_list_type = "quickfix"
+
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
