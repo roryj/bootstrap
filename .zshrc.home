@@ -30,7 +30,7 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 source $ZSH/oh-my-zsh.sh
 
-alias ls='ls -al'
+alias ls='ls -alh'
 
 bindkey -v
 bindkey '^R' history-incremental-search-backward
