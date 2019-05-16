@@ -92,6 +92,9 @@ let g:syntastic_check_on_wq = 0
 " vim tmux navigator
 Plugin 'christoomey/vim-tmux-navigator'
 
+" install go-vim plugin
+Plugin 'fatih/vim-go'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
