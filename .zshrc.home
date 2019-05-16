@@ -44,6 +44,11 @@ export PATH="/usr/local/go/bin:$PATH"
 export PATH="/Users/roryj/bin:$PATH"
 export PATH=$PATH:/usr/local/bin 
 
+# Add autocomplete for brew!
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+fi
+
 # configure fuzzy autocomplete on tab
 zstyle ':completion:*' matcher-list '' \
  'm:{a-z\-}={A-Z\_}' \
