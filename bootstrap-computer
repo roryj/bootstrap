@@ -13,40 +13,71 @@ _______  ___________ ___.__.   |__| \_ |__   ____   _____/  |_  _______/  |_____
 
 usage()
 {
-    echo "usage: bootstrap-laptop --home ~/test/ -i
+    echo "usage: bootstrap-computer --home ~/test/ --dotfiles
 
-    --home                  The home directory to install the dot files (defaults to ~/) 
-    -i | --install-packages A flag indicating you want to install some dope-fly packages
+    --all               Install everything. The whole mishpacha
+    --programs          Install programs
+    --dotfiles          Install the dotfiles
+    --home              The home directory to install the dot files (defaults to ~/) 
     "
 }
-prompt() {
+validate_and_prompt() {
 
-    if [[ $1 == 1 ]]; then
-        echo "Continue?"
+    local all=$1
+    local dotfiles=$2
+    local programs=$3
+    local home=$4
+
+    local output=""
+    if [[ ${all} == true ]]; then
+        output="Installing everything. Daaaaaaamn."
     else
-        echo "(Dry-run) Continue?"
+        if [[ ${dotfiles} == true ]]; then
+            output="Installing dotfiles to ${home}\n"
+        fi
+
+        if [[ ${programs} == true ]]; then
+            output="${output}Installing programs"
+        fi
+
+        if [[ ${output} == "" ]]; then
+            usage
+            exit 1
+        fi
+
     fi
+
+    echo -e "${output}"
+
+    echo "Are you sure? (y/N)"
 
     read continue
 
     if [[ ${continue} == "y" ]]; then
         return 1
     else
-        return 0
+        exit 0
     fi
 }
 
-
 # parsing the cmd
 install_directory=$HOME
-should_install_packages=false
+install_everything=false
+install_dotfiles=false
+install_programs=false
 while [[ "$1" != "" ]]; do
     case $1 in
-        --home )      shift
-            install_directory=$1
+        --all )
+            install_everything=true
             ;;
-        -i | --install-packages ) shift
-            should_install_packages=true
+        --dotfiles )
+            install_dotfiles=true
+            ;;
+        --programs )
+            install_programs=true
+            ;;
+        --home )    shift
+            install_directory=$1
             ;;
         * )                     
             usage
@@ -55,34 +86,28 @@ while [[ "$1" != "" ]]; do
     shift
 done
 
-install_directory=`realpath $install_directory`
+validate_and_prompt $install_everything $install_dotfiles $install_programs $install_directory
 
-prompt should_install_packages
+echo "Let's get it started"
 
-# Configuration
-echo "Using home directory: $install_directory"
-
-echo "Getting started..."
-
-echo "Installing dotfiles"
-
-rsync -av --exclude '*.git*' --exclude '*Config' --exclude '*README.md'  ./ $install_directory
-
-echo "Installing standalone programs"
-
-packages_to_install=('ripgrep' 'go' 'tldr' 'awscli' 'tmux' 'vim' 'python3' 'pandoc')
+packages_to_install=('ripgrep' 'go' 'tldr' 'awscli' 'tmux' 'vim' 'python3' 'pandoc' 'coreutils')
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     echo "Mac OS detected"
 
-    if [[ "$should_install_packages" = true ]]; then
+    if [[ ${install_everything} == true ]]; then
         # install xcode basics
+        echo "Installing xcode basics. Gotta get those basics"
         xcode-select --install
 
         # install brew for dope package managing
+        echo "Get that sweet sweet brew. A saviour to mac package management"
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    fi
 
+    if [[ (${install_everything} == true) || (${install_programs} == true) ]]; then
         # make sure it is all setup and working
+        echo "Making sure everything is hunky dory with brew. Stay safe out there"
         brew doctor
 
         for package in "${packages_to_install[@]}" 
@@ -90,10 +115,37 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
             echo "Installing ${package}"
             brew install "${package}"
         done
+
+        echo "Installing oh-my-zsh"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+        echo "Installing spacemacs #killing it"
+        git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+
+        echo "Installing vundle for vim package management"
+        git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     else
-        echo "Skipping package installing"
+        echo "Skipping package installation"
     fi
-
-
 fi
 
+echo "Done installing packages"
+
+if [[ (${install_everything} == true) || (${install_dotfiles} == true) ]]; then
+    install_directory=`realpath $install_directory`
+
+    echo "Using home directory: $install_directory"
+
+    echo "Installing dotfiles"
+
+    rsync -av --exclude '*.git*' --exclude '*Config' --exclude '*README.md'  ./ $install_directory
+
+    echo "dotfiles installed to ${install_directory}"
+
+    vim +PluginInstall +qall
+    source ~/.zshrc
+else
+    echo "Skipping dotfile installation"
+fi
+
+echo "Goodbye"
