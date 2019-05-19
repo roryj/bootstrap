@@ -133,7 +133,7 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     for package in "${packages_to_install[@]}"
     do
         echo "Installing ${package}"
-        sudo apt-get install "${package}"
+        yes | sudo apt-get install "${package}"
     done
 fi
 
