@@ -140,7 +140,10 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
                 OS=linux
                 ARCH=amd64
                 VERSION=12.5
-                tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
+                wget go-install.tar.gz "https://dl.google.com/go/go1.${VERSION}.${OS}-${ARCH}.tar.gz"
+                tar -C /usr/local -xzf go-install.tar.gz
+
+                rm go-install.tar.gz
             elif [[ "${package}" == "tldr" ]]; then
                 mkdir -p ~/bin
                 curl -o ~/bin/tldr https://raw.githubusercontent.com/raylee/tldr/master/tldr
