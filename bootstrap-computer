@@ -90,7 +90,7 @@ validate_and_prompt $install_everything $install_dotfiles $install_programs $ins
 
 echo "Let's get it started"
 
-packages_to_install=('ripgrep' 'go' 'tldr' 'awscli' 'tmux' 'vim' 'python3' 'pandoc' 'coreutils')
+packages_to_install=('git' 'ripgrep' 'go' 'tldr' 'awscli' 'tmux' 'vim' 'python3' 'pandoc' 'coreutils')
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     echo "Mac OS detected"
