@@ -159,12 +159,17 @@ if [[ (${install_everything} == true) || (${install_dotfiles} == true) ]]; then
 
     echo "Installing dotfiles"
 
-    rsync -av --exclude '*.git*' --exclude '*Config' --exclude '*README.md' --exclude '*bootstrap-computer'  ./ $install_directory
+    mkdir /tmp/bootstrap
+    git clone https://github.com/roryj/bootstrap /tmp/bootstrap
+
+    rsync -av --exclude '*.git*' --exclude '*Config' --exclude '*README.md' --exclude '*bootstrap-computer'  /tmp/bootstrap $install_directory
 
     echo "dotfiles installed to ${install_directory}"
 
     vim +PluginInstall +qall
     source ~/.zshrc
+
+    rm -rf /tmp/bootstrap
 else
     echo "Skipping dotfile installation"
 fi
