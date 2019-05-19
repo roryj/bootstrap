@@ -123,18 +123,33 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
     echo "Linux detected"
 
-    # first make sure you are up to date with the apt lists
-    sudo apt update
+    if [[ (${install_everything} == true) || (${install_programs} == true) ]]; then
+        # first make sure you are up to date with the apt lists
+        sudo apt update
 
-    # and then lets go and get everything up to date
-    apt list --upgradable
+        # and then lets go and get everything up to date
+        apt list --upgradable
+        sudo apt upgrade
 
-    # install all the packages, the linux way ;)
-    for package in "${packages_to_install[@]}"
-    do
-        echo "Installing ${package}"
-        yes | sudo apt-get install "${package}"
-    done
+        # install all the packages, the linux way ;)
+        for package in "${packages_to_install[@]}"
+        do
+            echo "Installing ${package}"
+
+            if [[ "${package}" == "go" ]]; then
+                OS=linux
+                ARCH=amd64
+                VERSION=12.5
+                tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
+            elif [[ "${package}" == "tldr" ]]; then
+                mkdir -p ~/bin
+                curl -o ~/bin/tldr https://raw.githubusercontent.com/raylee/tldr/master/tldr
+                chmod +x ~/bin/tldr
+            else
+                yes | sudo apt-get install "${package}"
+            fi
+        done
+    fi
 fi
 
 if [[ (${install_everything} == true) || (${install_programs} == true) ]]; then
@@ -143,11 +158,19 @@ if [[ (${install_everything} == true) || (${install_programs} == true) ]]; then
     echo "Installing oh-my-zsh"
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-    echo "Installing spacemacs #killing it"
-    git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+    if [ -d "~/.emacs.d" ]; then
+        echo "Skipping installation of spacemacs since it is already there"
+    else
+        echo "Installing spacemacs #killing it"
+        git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+    fi
 
-    echo "Installing vundle for vim package management"
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    if [ -f "~/.vim/bundle/Vundle.vim" ]; then
+        echo "Skipping installation of vundle since it is already there"
+    else
+        echo "Installing vundle for vim package management"
+        git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    fi
 fi
 
 echo "Done installing packages"
@@ -162,7 +185,7 @@ if [[ (${install_everything} == true) || (${install_dotfiles} == true) ]]; then
     mkdir /tmp/bootstrap
     git clone https://github.com/roryj/bootstrap /tmp/bootstrap
 
-    rsync -av --exclude '*.git*' --exclude '*Config' --exclude '*README.md' --exclude '*bootstrap-computer'  /tmp/bootstrap $install_directory
+    rsync -av --exclude '*.git*' --exclude '*Config' --exclude '*README.md' --exclude '*bootstrap-computer'  /tmp/bootstrap/ $install_directory
 
     echo "dotfiles installed to ${install_directory}"
 
