@@ -55,3 +55,6 @@ zstyle ':completion:*' matcher-list '' \
 
 # For raspberry pi @ home
 alias ssh-rpi='ssh roryj@192.168.1.112'
+
+# git aliasing for nicer log statments
+git alias.dag 'log --pretty="format:%C(yellow)%h%Cred%d%Creset - %C(cyan)%an %Creset: %s %Cgreen(%cr)"'
