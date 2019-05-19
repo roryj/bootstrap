@@ -92,6 +92,8 @@ echo "Let's get it started"
 
 packages_to_install=('git' 'ripgrep' 'go' 'tldr' 'awscli' 'tmux' 'vim' 'python3' 'pandoc' 'coreutils')
 
+echo "Installing OS specific packages"
+
 if [[ "$OSTYPE" == "darwin"* ]]; then
     echo "Mac OS detected"
 
@@ -110,23 +112,42 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "Making sure everything is hunky dory with brew. Stay safe out there"
         brew doctor
 
-        for package in "${packages_to_install[@]}" 
+        for package in "${packages_to_install[@]}"
         do
             echo "Installing ${package}"
             brew install "${package}"
         done
-
-        echo "Installing oh-my-zsh"
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
-        echo "Installing spacemacs #killing it"
-        git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
-
-        echo "Installing vundle for vim package management"
-        git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     else
         echo "Skipping package installation"
     fi
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+    echo "Linux detected"
+
+    # first make sure you are up to date with the apt lists
+    sudo apt update
+
+    # and then lets go and get everything up to date
+    apt list --upgradable
+
+    # install all the packages, the linux way ;)
+    for package in "${packages_to_install[@]}"
+    do
+        echo "Installing ${package}"
+        apt-get install "${package}"
+    done
+fi
+
+if [[ (${install_everything} == true) || (${install_programs} == true) ]]; then
+    echo "Installing goodies for all OS'"
+
+    echo "Installing oh-my-zsh"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+    echo "Installing spacemacs #killing it"
+    git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+
+    echo "Installing vundle for vim package management"
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
 
 echo "Done installing packages"
