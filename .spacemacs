@@ -36,7 +36,6 @@ user code."
   ;; Remove annoying save files. Put them somewhere nice and safe for when you do screw up :)
   (setq backup-directory-alist `(("." . ,(expand-file-name "~/.emacs-backups"))))
   )
-
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
@@ -58,7 +57,7 @@ layers configuration. You are free to put any user code."
   ;; org mode todo keywords
   (setq org-todo-keywords
         '(
-          (sequence "TODO" "BLOCKED" "|" "DONE")
+          (sequence "TODO" "IN PROGRESS" "BLOCKED" "|" "DONE" "CANCELED")
           (sequence "RESEARCHING" "|" "COMPLETE")
           (sequence "IDEA" "PROGRESS" "|" "FINISHED")
           ))
@@ -71,19 +70,20 @@ layers configuration. You are free to put any user code."
           ("TODO"
            :weight bold
            :foreground "#FC5B3F")
+          ("IN PROGRESS" . "orange")
+          ("BLOCKED"
+           :weight bold
+           :background "red"
+           :foreground "white")
+          ("CANCELED" . "red")
           ("IDEA" . org-warning)
           ("DONE"
            :weight bold
-           :foreground "#6CB045")
+           :foreground "green")
           ("RESEARCHING"
            :weight bold
            :foreground "#FCB03C")
-          ("BLOCKED"
-           :weight bold
-           :background "#FF0000"
-           :foreground "#FFFFFF")
-          )
-        )
+          ))
   ;; org-journal settings
   (setq org-journal-file-format "%Y-%m-%d.org")
   (defvar org-journal-date-format "%A %d-%m-%Y"
