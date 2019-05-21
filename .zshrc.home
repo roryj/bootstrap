@@ -21,14 +21,14 @@ ZSH_TMUX_AUTOCONNECT="false"
 
 # For zsh autosuggest
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=blue'
+
 bindkey '^F' autosuggest-accept
+
+source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
-# export MANPATH="/usr/local/man:$MANPATH"
-
-source $ZSH/oh-my-zsh.sh
 
 alias ls='ls -lh'
 
