@@ -1,0 +1,7 @@
+[alias]
+    dag = log --pretty=\"format:%C(yellow)%h%Cred%d%Creset - %C(cyan)%an %Creset: %s %Cgreen(%cr)\"
+[user]
+	email = roryjacob@gmail.com
+	name = Rory Jacob
+[core]
+	editor = vim
