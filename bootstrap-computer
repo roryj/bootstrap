@@ -146,7 +146,7 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
                     OS=linux
                     ARCH=amd64
                     VERSION=12.5
-                    wget go-install.tar.gz "https://dl.google.com/go/go1.${VERSION}.${OS}-${ARCH}.tar.gz"
+                    wget -O go-install.tar.gz "https://dl.google.com/go/go1.${VERSION}.${OS}-${ARCH}.tar.gz"
                     tar -C /usr/local -xzf go-install.tar.gz
 
                     rm go-install.tar.gz
