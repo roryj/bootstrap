@@ -171,14 +171,14 @@ if [[ (${install_everything} == true) || (${install_programs} == true) ]]; then
     echo "Installing oh-my-zsh"
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-    if [ -d "~/.emacs.d" ]; then
+    if [[ -d "${HOME}/.emacs.d" ]]; then
         echo "Skipping installation of spacemacs since it is already there"
     else
         echo "Installing spacemacs #killing it"
         git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
     fi
 
-    if [ -f "~/.vim/bundle/Vundle.vim" ]; then
+    if [[ -d "${HOME}/.vim/bundle/Vundle.vim" ]]; then
         echo "Skipping installation of vundle since it is already there"
     else
         echo "Installing vundle for vim package management"
