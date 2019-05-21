@@ -203,9 +203,13 @@ if [[ (${install_everything} == true) || (${install_dotfiles} == true) ]]; then
     echo "dotfiles installed to ${install_directory}"
 
     vim +PluginInstall +qall
-    source ~/.zshrc
 
     rm -rf /tmp/bootstrap
+
+    echo "All dotfiles installed. Don't forget to run the following command to source your zshrc file!"
+    echo "**********************************"
+    echo "source ${install_directory}/.zshrc"
+    echo "**********************************"
 else
     echo "Skipping dotfile installation"
 fi
