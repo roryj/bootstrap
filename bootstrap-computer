@@ -60,11 +60,6 @@ validate_and_prompt() {
     fi
 }
 
-is_command_installed() {
-    local command_name=$1
-    echo "$(command -v ${command_name})"
-}
-
 # parsing the cmd
 install_directory=$HOME
 install_everything=false
@@ -141,19 +136,18 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
         do
             echo "Installing ${package}"
 
-            if [[ ! -z $(is_command_installed "${package}") ]]; then
+            if [[ ! -x $(command -v ${package}) ]]; then
                 if [[ "${package}" == "go" ]]; then
                     OS=linux
                     ARCH=amd64
                     VERSION=12.5
                     wget -O go-install.tar.gz "https://dl.google.com/go/go1.${VERSION}.${OS}-${ARCH}.tar.gz"
-                    tar -C /usr/local -xzf go-install.tar.gz
+                    sudo tar -C /usr/local -xzf go-install.tar.gz
 
                     rm go-install.tar.gz
                 elif [[ "${package}" == "tldr" ]]; then
-                    mkdir -p ~/bin
-                    curl -o ~/bin/tldr https://raw.githubusercontent.com/raylee/tldr/master/tldr
-                    chmod +x ~/bin/tldr
+                    sudo curl -o /usr/local/bin/tldr https://raw.githubusercontent.com/raylee/tldr/master/tldr
+                    sudo chmod +x /usr/local/bin/tldr
                 else
                     yes | sudo apt-get install "${package}"
                 fi
