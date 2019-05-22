@@ -1,1 +1,1 @@
-source .zshrc.home
+source $HOME/.zshrc.home
