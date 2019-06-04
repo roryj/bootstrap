@@ -54,6 +54,7 @@ layers configuration. You are free to put any user code."
   ;; dim blocked TODOs from above to be slightly dimmed
   (setq org-agenda-dim-blocked-tasks t)
 
+  (setq org-agenda-files '("~/emacs"))
 
   ;; org mode todo keywords
   (setq org-todo-keywords
