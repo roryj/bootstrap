@@ -59,12 +59,10 @@ layers configuration. You are free to put any user code."
   ;; org mode todo keywords
   (setq org-todo-keywords
         '(
-          (sequence "TODO" "IN PROGRESS" "BLOCKED" "|" "DONE" "CANCELED")
+          (sequence "TODO(t)" "IN PROGRESS(w!)" "BLOCKED(b@)" "|" "DONE(d!)" "CANCELED(c@)")
           (sequence "RESEARCHING" "|" "COMPLETE")
           (sequence "IDEA" "PROGRESS" "|" "FINISHED")
           ))
-  ;; add the time to the entry when it is marked as done
-  (setq org-log-done 'time)
 
   ;; Set the colouring and look of the todo keywords
   (setq org-todo-keyword-faces
