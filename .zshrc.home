@@ -54,4 +54,4 @@ zstyle ':completion:*' matcher-list '' \
  'r:[[:ascii:]]||[[:ascii:]]=** r:|=* m:{a-z\-}={A-Z\_}'
 
 # For raspberry pi @ home
-alias ssh-rpi='ssh roryj@192.168.1.112'
+alias ssh-rpi='ssh roryj@192.168.86.29'
