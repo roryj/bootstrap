@@ -51,7 +51,7 @@ validate_and_prompt() {
 
     echo "Are you sure? (y/N)"
 
-    read continue
+    read -r continue
 
     if [[ ${continue} == "y" ]]; then
         return 1
@@ -86,11 +86,11 @@ while [[ "$1" != "" ]]; do
     shift
 done
 
-validate_and_prompt $install_everything $install_dotfiles $install_programs $install_directory
+validate_and_prompt "$install_everything" "$install_dotfiles" "$install_programs" "$install_directory"
 
 echo "Let's get it started"
 
-packages_to_install=('zsh' 'git' 'ripgrep' 'go' 'tldr' 'awscli' 'tmux' 'vim' 'python3' 'pandoc' 'coreutils')
+packages_to_install=('zsh' 'git' 'ripgrep' 'go' 'tldr' 'awscli' 'tmux' 'vim' 'python3' 'pandoc' 'coreutils' 'delta')
 
 echo "Installing OS specific packages"
 
@@ -103,8 +103,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         xcode-select --install
 
         # install brew for dope package managing
-        echo "Get that sweet sweet brew. A saviour to mac package management"
-        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        if [[ ! -x $(command -v brew) ]]; then
+            echo "Get that sweet sweet brew. A saviour to mac package management"
+            /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        else
+            echo "brew already installed!"
+        fi
     fi
 
     if [[ (${install_everything} == true) || (${install_programs} == true) ]]; then
@@ -136,7 +140,7 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
         do
             echo "Installing ${package}"
 
-            if [[ ! -x $(command -v ${package}) ]]; then
+            if [[ ! -x $(command -v "${package}") ]]; then
                 if [[ "${package}" == "go" ]]; then
                     OS=linux
                     ARCH=amd64
@@ -165,12 +169,12 @@ if [[ (${install_everything} == true) || (${install_programs} == true) ]]; then
     echo "Installing oh-my-zsh"
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-    if [[ -d "${HOME}/.emacs.d" ]]; then
-        echo "Skipping installation of spacemacs since it is already there"
-    else
-        echo "Installing spacemacs #killing it"
-        git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
-    fi
+    #if [[ -d "${HOME}/.emacs.d" ]]; then
+    #    echo "Skipping installation of spacemacs since it is already there"
+    #else
+    #    echo "Installing spacemacs #killing it"
+    #    git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+    #fi
 
     if [[ -d "${HOME}/.vim/bundle/Vundle.vim" ]]; then
         echo "Skipping installation of vundle since it is already there"
@@ -183,7 +187,7 @@ fi
 echo "Done installing packages"
 
 if [[ (${install_everything} == true) || (${install_dotfiles} == true) ]]; then
-    install_directory=`realpath $install_directory`
+    install_directory=$(realpath "$install_directory")
 
     echo "Using home directory: $install_directory"
 
@@ -192,7 +196,7 @@ if [[ (${install_everything} == true) || (${install_dotfiles} == true) ]]; then
     mkdir /tmp/bootstrap
     git clone https://github.com/roryj/bootstrap /tmp/bootstrap
 
-    rsync -av --exclude '*.git*' --exclude '*Config' --exclude '*README.md' --exclude '*bootstrap-computer'  /tmp/bootstrap/ $install_directory
+    rsync -av --exclude '*.git/*' --exclude '*Config' --exclude '*README.md' --exclude '*bootstrap-computer'  /tmp/bootstrap/ "$install_directory"
 
     echo "dotfiles installed to ${install_directory}"
 

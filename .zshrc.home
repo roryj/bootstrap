@@ -27,7 +27,6 @@ bindkey '^F' autosuggest-accept
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 
 alias ls='ls -lh'
@@ -40,18 +39,18 @@ export PATH="/usr/local/go/bin:$PATH"
 
 # Add bin and local bin to path
 export PATH="/Users/roryj/bin:$PATH"
-export PATH=$PATH:/usr/local/bin 
+export PATH=$PATH:$HOME/.local/bin 
 
-# Add autocomplete for brew!
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
-fi
+# add emacs bin
+export PATH=$PATH:$HOME/.emacs.d/bin
+
+# add rust
+export PATH=$PATH:$HOME/.cargo/bin
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # configure fuzzy autocomplete on tab
 zstyle ':completion:*' matcher-list '' \
  'm:{a-z\-}={A-Z\_}' \
  'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
  'r:[[:ascii:]]||[[:ascii:]]=** r:|=* m:{a-z\-}={A-Z\_}'
-
-# For raspberry pi @ home
-alias ssh-rpi='ssh roryj@192.168.86.29'
