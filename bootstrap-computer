@@ -90,7 +90,7 @@ validate_and_prompt "$install_everything" "$install_dotfiles" "$install_programs
 
 echo "Let's get it started"
 
-packages_to_install=('zsh' 'git' 'ripgrep' 'go' 'tldr' 'awscli' 'tmux' 'vim' 'python3' 'pandoc' 'coreutils' 'delta')
+packages_to_install=('zsh' 'git' 'ripgrep' 'go' 'tldr' 'awscli' 'tmux' 'vim' 'python3' 'pandoc' 'coreutils' 'git-delta')
 
 echo "Installing OS specific packages"
 

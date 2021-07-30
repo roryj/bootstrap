@@ -1,3 +1,7 @@
+[user]
+    email = roryjacob@gmail.com
+    name = Rory Jacob
+
 [alias]
     dag = log --pretty=\"format:%C(yellow)%h%Cred%d%Creset - %C(cyan)%an %Creset: %s %Cgreen(%cr)\"
     nb = checkout -b
@@ -5,14 +9,25 @@
     undo = reset HEAD~1 --mixed
     amend = commit --amend
     pick = cherry-pick
-[user]
-    email = roryjacob@gmail.com
-    name = Rory Jacob
+
+[delta]
+    plus-style = "syntax #012800"
+    minus-style = "syntax #340001"
+    navigate = true
+    line-numbers = true
+
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+
 [core]
     editor = vim
-    pager = delta --plus-color="#012800" --minus-color="#340001"
+    pager = delta
 
 [interactive]
     diffFilter = delta --color-only
+
 [pull]
     rebase = true
