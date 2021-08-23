@@ -14,7 +14,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode aws tmux)
+plugins=(vi-mode aws tmux fzf)
 
 # For zsh tmux addition https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins#tmux
 ZSH_TMUX_AUTOCONNECT="false"
@@ -49,8 +49,6 @@ export PATH=$PATH:$HOME/.cargo/bin
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# configure fuzzy autocomplete on tab
-zstyle ':completion:*' matcher-list '' \
- 'm:{a-z\-}={A-Z\_}' \
- 'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
- 'r:[[:ascii:]]||[[:ascii:]]=** r:|=* m:{a-z\-}={A-Z\_}'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export EDITOR=vim
