@@ -1,0 +1,5 @@
+layout fat
+
+cd $HOME/development/vendia/src/share/share_backend
+
+launch --title "vendia dev"
