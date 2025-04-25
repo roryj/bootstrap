@@ -99,7 +99,9 @@ let g:go_fmt_command = "goimports"
 " only use quickfix for errors
 let g:go_list_type = "quickfix"
 
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
+Plugin 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'}
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -466,6 +468,11 @@ function! <SID>BufcloseCloseIt()
      execute("bdelete! ".l:currentBufNum)
    endif
 endfunction
+
+if has('mac')
+:set t_RV=
+endif
+
 
 
 " Added for powerline

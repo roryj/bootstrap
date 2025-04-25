@@ -9,6 +9,8 @@
     undo = reset HEAD~1 --mixed
     amend = commit --amend
     pick = cherry-pick
+    summary = log --stat --summary
+    fuck = reset --hard origin/master
 
 [delta]
     plus-style = "syntax #012800"
@@ -26,8 +28,22 @@
     editor = vim
     pager = delta
 
+[diff]
+    colorMoved = default
+
 [interactive]
     diffFilter = delta --color-only
 
 [pull]
     rebase = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+
+[init]
+	defaultBranch = mainline
+[push]
+	autoSetupRemote = true
